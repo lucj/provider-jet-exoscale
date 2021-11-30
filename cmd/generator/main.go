@@ -23,7 +23,7 @@ import (
 	"os"
 	"path/filepath"
 
-	tf "github.com/hashicorp/terraform-provider-hashicups/hashicups"
+	tf "github.com/exoscale/terraform-provider-exoscale/exoscale"
 
 	"github.com/crossplane-contrib/terrajet/pkg/pipeline"
 

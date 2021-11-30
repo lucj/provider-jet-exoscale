@@ -19,8 +19,8 @@ package config
 import (
 	tjconfig "github.com/crossplane-contrib/terrajet/pkg/config"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
-        tf "github.com/exoscale/terraform-provider-exoscale/exoscale"
-        "github.com/crossplane-contrib/provider-jet-exoscale/config/sks"
+
+	"github.com/crossplane-contrib/provider-jet-exoscale/config/sks"
 )
 
 const (
@@ -49,7 +49,7 @@ func GetProvider(tf *schema.Provider) *tjconfig.Provider {
 
 	for _, configure := range []func(provider *tjconfig.Provider){
 		// add custom config functions
-                exoscale_sks_cluster.Customize,
+		sks.Customize,
 	} {
 		configure(pc)
 	}
