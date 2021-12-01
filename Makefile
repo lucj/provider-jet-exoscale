@@ -2,7 +2,7 @@
 # Setup Project
 
 PROJECT_NAME := provider-jet-exoscale
-PROJECT_REPO := github.com/crossplane-contrib/$(PROJECT_NAME)
+PROJECT_REPO := github.com/lucj/$(PROJECT_NAME)
 
 export TERRAFORM_VERSION := 1.0.11
 export TERRAFORM_PROVIDER_SOURCE := exoscale/exoscale
