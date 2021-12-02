@@ -28,10 +28,10 @@ import (
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	"github.com/crossplane-contrib/provider-jet-exoscale/apis"
-	pconfig "github.com/crossplane-contrib/provider-jet-exoscale/config"
-	"github.com/crossplane-contrib/provider-jet-exoscale/internal/clients"
-	"github.com/crossplane-contrib/provider-jet-exoscale/internal/controller"
+	"github.com/lucj/provider-jet-exoscale/apis"
+	pconfig "github.com/lucj/provider-jet-exoscale/config"
+	"github.com/lucj/provider-jet-exoscale/internal/clients"
+	"github.com/lucj/provider-jet-exoscale/internal/controller"
 )
 
 func main() {

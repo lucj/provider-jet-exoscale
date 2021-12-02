@@ -1,4 +1,4 @@
-module github.com/crossplane-contrib/provider-jet-exoscale
+module github.com/lucj/provider-jet-exoscale
 
 go 1.16
 
@@ -11,6 +11,7 @@ require (
 	github.com/hashicorp/terraform-provider-hashicups v0.3.1
 	github.com/pkg/errors v0.9.1
 	go.uber.org/multierr v1.7.0 // indirect
+	golang.org/x/tools v0.1.7 // indirect
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6
 	k8s.io/apimachinery v0.22.0
 	k8s.io/client-go v0.22.0

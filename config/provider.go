@@ -20,12 +20,12 @@ import (
 	tjconfig "github.com/crossplane-contrib/terrajet/pkg/config"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/crossplane-contrib/provider-jet-exoscale/config/sks"
+	"github.com/lucj/provider-jet-exoscale/config/sks"
 )
 
 const (
 	resourcePrefix = "exoscale"
-	modulePath     = "github.com/crossplane-contrib/provider-jet-exoscale"
+	modulePath     = "github.com/lucj/provider-jet-exoscale"
 )
 
 // GetProvider returns provider configuration
