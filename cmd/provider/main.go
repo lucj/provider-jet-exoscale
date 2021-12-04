@@ -20,10 +20,13 @@ import (
 	"os"
 	"path/filepath"
 
+        tf "github.com/exoscale/terraform-provider-exoscale/exoscale"
+        "github.com/lucj/provider-jet-exoscale/config"
+
 	"github.com/crossplane-contrib/terrajet/pkg/terraform"
 	"github.com/crossplane/crossplane-runtime/pkg/logging"
 	"github.com/crossplane/crossplane-runtime/pkg/ratelimiter"
-	tf "github.com/hashicorp/terraform-provider-hashicups/hashicups"
+	// tf "github.com/hashicorp/terraform-provider-hashicups/hashicups"
 	"gopkg.in/alecthomas/kingpin.v2"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
