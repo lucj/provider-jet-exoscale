@@ -21,7 +21,6 @@ import (
 	"path/filepath"
 
         tf "github.com/exoscale/terraform-provider-exoscale/exoscale"
-        "github.com/lucj/provider-jet-exoscale/config"
 
 	"github.com/crossplane-contrib/terrajet/pkg/terraform"
 	"github.com/crossplane/crossplane-runtime/pkg/logging"
