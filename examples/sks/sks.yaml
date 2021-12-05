@@ -6,5 +6,6 @@ spec:
   forProvider:
     description: "Managed with Crossplane Exoscale Provider (generated with Terrajet)"
     zone: "de-fra-1"
+    name: "demo"
   providerConfigRef:
     name: default

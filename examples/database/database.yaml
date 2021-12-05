@@ -1,0 +1,12 @@
+apiVersion: database.exoscale.jet.crossplane.io/v1alpha1
+kind: Database
+metadata:
+  name: db
+spec:
+  forProvider:
+    zone: "de-fra-1"
+    name: "demo"
+    type: "pg"
+    plan: "startup-4"
+  providerConfigRef:
+    name: default

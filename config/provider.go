@@ -21,6 +21,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
 	"github.com/lucj/provider-jet-exoscale/config/sks"
+	"github.com/lucj/provider-jet-exoscale/config/database"
 )
 
 const (
@@ -45,11 +46,13 @@ func GetProvider(tf *schema.Provider) *tjconfig.Provider {
 		tjconfig.WithDefaultResourceFn(defaultResourceFn),
                 tjconfig.WithIncludeList([]string{
                   "exoscale_sks_cluster$",
+                  "exoscale_database$",
                 }))
 
 	for _, configure := range []func(provider *tjconfig.Provider){
 		// add custom config functions
 		sks.Customize,
+                database.Customize,
 	} {
 		configure(pc)
 	}
