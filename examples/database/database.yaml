@@ -5,8 +5,9 @@ metadata:
 spec:
   forProvider:
     zone: "de-fra-1"
-    name: "demo"
+    name: "test"
     type: "pg"
     plan: "startup-4"
+    terminationProtection: false
   providerConfigRef:
     name: default
