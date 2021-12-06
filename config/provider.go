@@ -22,6 +22,7 @@ import (
 
 	"github.com/lucj/provider-jet-exoscale/config/sks"
 	"github.com/lucj/provider-jet-exoscale/config/database"
+	"github.com/lucj/provider-jet-exoscale/config/compute"
 )
 
 const (
@@ -47,12 +48,14 @@ func GetProvider(tf *schema.Provider) *tjconfig.Provider {
                 tjconfig.WithIncludeList([]string{
                   "exoscale_sks_cluster$",
                   "exoscale_database$",
+                  "exoscale_compute$",
                 }))
 
 	for _, configure := range []func(provider *tjconfig.Provider){
 		// add custom config functions
 		sks.Customize,
                 database.Customize,
+                compute.Customize,
 	} {
 		configure(pc)
 	}
