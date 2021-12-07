@@ -50,7 +50,7 @@ GO111MODULE = on
 # ====================================================================================
 # Setup Images
 
-DOCKER_REGISTRY := crossplane
+DOCKER_REGISTRY := lucj
 IMAGES = provider-jet-exoscale provider-jet-exoscale-controller
 -include build/makelib/image.mk
 
