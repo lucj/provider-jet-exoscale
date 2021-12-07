@@ -1,16 +1,14 @@
 apiVersion: compute.exoscale.jet.crossplane.io/v1alpha1
-kind: Compute
+kind: Instance
 metadata:
-  name: compute5
+  name: demo
 spec:
   forProvider:
-    displayName: "test5"
+    displayName: "demo"
     zone: "de-fra-1"
     diskSize: 30
     template: "Linux Ubuntu 20.04 LTS 64-bit"
-    # templateId: "3ebca0c5-63f4-4055-b325-3cef0e68fa98"
     securityGroups: ["default"]
-    # securityGroupsIds: ["2ad28e49-ecb9-48e4-ad3e-05b854ff0cfa"]
     keyPair: "training"
   providerConfigRef:
     name: default
