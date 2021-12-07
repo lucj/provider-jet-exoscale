@@ -20,9 +20,9 @@ import (
 	tjconfig "github.com/crossplane-contrib/terrajet/pkg/config"
 	"github.com/hashicorp/terraform-plugin-sdk/v2/helper/schema"
 
-	"github.com/lucj/provider-jet-exoscale/config/sks"
-	"github.com/lucj/provider-jet-exoscale/config/database"
 	"github.com/lucj/provider-jet-exoscale/config/compute"
+	"github.com/lucj/provider-jet-exoscale/config/database"
+	"github.com/lucj/provider-jet-exoscale/config/sks"
 )
 
 const (
@@ -45,17 +45,17 @@ func GetProvider(tf *schema.Provider) *tjconfig.Provider {
 
 	pc := tjconfig.NewProvider(tf.ResourcesMap, resourcePrefix, modulePath,
 		tjconfig.WithDefaultResourceFn(defaultResourceFn),
-                tjconfig.WithIncludeList([]string{
-                  "exoscale_sks_cluster$",
-                  "exoscale_database$",
-                  "exoscale_compute$",
-                }))
+		tjconfig.WithIncludeList([]string{
+			"exoscale_sks_cluster$",
+			"exoscale_database$",
+			"exoscale_compute$",
+		}))
 
 	for _, configure := range []func(provider *tjconfig.Provider){
 		// add custom config functions
 		sks.Customize,
-                database.Customize,
-                compute.Customize,
+		database.Customize,
+		compute.Customize,
 	} {
 		configure(pc)
 	}

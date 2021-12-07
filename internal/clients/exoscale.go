@@ -31,11 +31,11 @@ import (
 )
 
 const (
-	keyKey = "key"
+	keyKey    = "key"
 	keySecret = "secret"
 
 	// Exoscale credentials environment variable names
-	envKey = "EXOSCALE_API_KEY"
+	envKey    = "EXOSCALE_API_KEY"
 	envSecret = "EXOSCALE_API_SECRET"
 )
 
@@ -87,7 +87,7 @@ func TerraformSetupBuilder(version, providerSource, providerVersion string) terr
 
 		// set provider configuration
 		ps.Configuration = map[string]interface{}{
-	 //		"host": exoscaleCreds[keyHost],
+			//		"host": exoscaleCreds[keyHost],
 		}
 		// set environment variables for sensitive provider configuration
 		ps.Env = []string{
