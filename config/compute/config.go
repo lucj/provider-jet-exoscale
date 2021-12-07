@@ -8,5 +8,8 @@ func Customize(p *config.Provider) {
         // we need to override the default group that terrajet generated for
         r.ShortGroup = "compute"
         r.ExternalName = config.IdentifierFromProvider
+        r.LateInitializer = config.LateInitializer{
+	   IgnoredFields: []string{"template_id", "security_group_ids"},
+	}
     })
 }
