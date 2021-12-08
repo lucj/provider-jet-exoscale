@@ -50,13 +50,12 @@ cat examples/providerconfig/secret.yaml.tmpl| envsubst | kubectl apply -f -
 
 2. Provider installation
 
-Install the Exoscale provider by using the following command
+Install the Exoscale provider by using the following command replacing:
+- ARCH with arm64 or amd64
 
 ```
-kubectl crossplane install provider lucj/provider-jet-exoscale-amd64:v0.0.0-24.g7608dd6
+kubectl crossplane install provider lucj/provider-jet-exoscale-ARCH:latest
 ```
-
-Note: arm64 will be available soon
 
 3. Create Exoscale resources:
 

@@ -4,4 +4,4 @@ metadata:
   name: provider-jet-exoscale
 spec:
   controller:
-    image: lucj/provider-jet-exoscale-controller-arm64:VERSION
+    image: lucj/provider-jet-exoscale-controller-ARCH:VERSION
