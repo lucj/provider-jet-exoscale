@@ -53,7 +53,7 @@ cat examples/providerconfig/secret.yaml.tmpl| envsubst | kubectl apply -f -
 Install the Exoscale provider by using the following command
 
 ```
-kubectl crossplane install provider lucj/provider-jet-exoscale-amd64:v0.0.0-23.g16f4e86
+kubectl crossplane install provider lucj/provider-jet-exoscale-amd64:v0.0.0-24.g7608dd6
 ```
 
 Note: arm64 will be available soon
