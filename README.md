@@ -22,7 +22,10 @@ You need:
 - kubectl
 - helm
 
-- Install crossplane
+1. Install crossplane
+
+Crossplane can be installed with Helm using the command below:
+
 ```
 kubectl create namespace crossplane-system
 
@@ -32,23 +35,41 @@ helm repo update
 helm install crossplane --namespace crossplane-system crossplane-stable/crossplane
 ```
 
-- Install crossplane cli
+The crossplane cli can be installed with the following command:
+
 ```
 curl -sL https://raw.githubusercontent.com/crossplane/crossplane/release-1.5/install.sh | sh
 ```
 
-1. Create a secret containing Exoscale creds
+2. Create a secret containing Exoscale creds
 
-Note: envsubst is used in the following commands to replace env variables within the secret.yaml.tmpl
-file. If you do not have envsubst, you can create the secret after having replaced the env var manually.
+Set Exoscale Key and Secret as env variables:
 
 ```
 export EXOSCALE_API_KEY=...
 export EXOSCALE_API_SECRET=...
-cat examples/providerconfig/secret.yaml.tmpl| envsubst | kubectl apply -f -
 ```
 
-2. Provider installation
+Create a secret containing those credentials:
+
+```
+cat <<EOF | kubectl apply -f -
+apiVersion: v1
+kind: Secret
+metadata:
+  name: exoscale-creds
+  namespace: crossplane-system
+type: Opaque
+stringData:
+  credentials: |
+    {
+      "key": "${EXOSCALE_API_KEY}",
+      "secret": "${EXOSCALE_API_SECRET}"
+    }
+EOF
+```
+
+3. Provider installation
 
 Install the Exoscale provider by using the following command replacing:
 - ARCH with arm64 or amd64
@@ -57,7 +78,25 @@ Install the Exoscale provider by using the following command replacing:
 kubectl crossplane install provider lucj/provider-jet-exoscale-ARCH:latest
 ```
 
-3. Create Exoscale resources:
+4. Create a provider configuration
+
+```
+cat <<EOF | kubectl apply -f -
+apiVersion: exoscale.jet.crossplane.io/v1alpha1
+kind: ProviderConfig
+metadata:
+  name: exoscale
+spec:
+  credentials:
+    source: Secret
+    secretRef:
+      name: exoscale-creds
+      namespace: crossplane-system
+      key: credentials
+EOF
+```
+
+5. Create Exoscale resources:
 
 - Compute instance
 
@@ -75,7 +114,7 @@ spec:
     template: "Linux Ubuntu 20.04 LTS 64-bit"
     securityGroups: ["default"]
   providerConfigRef:
-    name: default
+    name: exoscale
 EOF
 ```
 
@@ -99,7 +138,7 @@ spec:
     plan: "startup-4"
     terminationProtection: false
   providerConfigRef:
-    name: default
+    name: exoscale
 EOF
 ```
 
@@ -121,7 +160,7 @@ spec:
     zone: "de-fra-1"
     name: "demo"
   providerConfigRef:
-    name: default
+    name: exoscale
 EOF
 ```
 
@@ -129,6 +168,32 @@ From your Exoscale portal you will see a new SKS cluster
 
 ![portal](./picts/exoscale_sks_cluster.png)
 
+
+The 3 resources above appear as managed resources, in a couple of seconds they are in synced (meaning
+that the specification is in sync with the acutal resource existing in the cluster):
+
+```
+$ watch kubectl get managed 
+
+Every 2.0s: kubectl get managed                                                                                                                     jupiter.local: Wed Dec  8 16:47:03 2021
+
+NAME                                               READY   SYNCED   EXTERNAL-NAME                          AGE
+instance.compute.exoscale.jet.crossplane.io/demo   True    True     89a679c2-f5ef-4d6e-852e-757b0840c6b0   3m49s
+
+NAME                                              READY   SYNCED   EXTERNAL-NAME   AGE
+database.database.exoscale.jet.crossplane.io/db   True    True     test            3m39s
+
+NAME                                          READY   SYNCED   EXTERNAL-NAME                          AGE
+cluster.sks.exoscale.jet.crossplane.io/demo   True    True     a144b2f4-0091-4090-be69-3cdcd6a097de   3m26s
+```
+
+Removing the resources from the cluster only requires the usual `kubectl delete`:
+
+```
+kubectl delete instance demo
+kubectl delete database db
+kubectl delete cluster demo
+```
 
 ## Report a Bug
 
