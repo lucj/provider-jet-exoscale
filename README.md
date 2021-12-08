@@ -2,70 +2,139 @@
 
 `provider-jet-exoscale` is a [Crossplane](https://crossplane.io/) provider that
 is built using [Terrajet](https://github.com/crossplane-contrib/terrajet) code
-generation tools and exposes XRM-conformant managed resources for the 
-Exoscale API.
+generation tools and exposes XRM-conformant managed resources for the Exoscale API.
+
+# Status
+
+Warning: this is a WIP, currently for testing purposes and not yet in an alpha version :)
+
+Only a limited number of resources are taken into account and not fully tested:
+- instances
+- sks cluster (without nodepool nor security groups)
+- DBaas
 
 ## Getting Started
 
-Install the provider by using the following command after changing the image tag
-to the [latest release](https://github.com/crossplane-contrib/provider-jet-exoscale/releases):
+0. Pre-requisites
+
+You need:
+- a kubernetes cluster (easy to set up using [Kind](https://kind.sigs.k8s.io/docs/user/quick-start/))
+- kubectl
+- helm
+
+- Install crossplane
 ```
-kubectl crossplane install provider crossplane/provider-jet-exoscale:v0.1.0
-```
+kubectl create namespace crossplane-system
 
-You can see the API reference [here](https://doc.crds.dev/github.com/crossplane-contrib/provider-jet-exoscale).
+helm repo add crossplane-stable https://charts.crossplane.io/stable
+helm repo update
 
-## Developing
-
-Run code-generation pipeline:
-```console
-go run cmd/generator/main.go
-```
-
-Run against a Kubernetes cluster:
-
-```console
-make run
+helm install crossplane --namespace crossplane-system crossplane-stable/crossplane
 ```
 
-Build, push, and install:
-
-```console
-make all
+- Install crossplane cli
+```
+curl -sL https://raw.githubusercontent.com/crossplane/crossplane/release-1.5/install.sh | sh
 ```
 
-Build image:
+1. Create a secret containing Exoscale creds
 
-```console
-make image
+Note: envsubst is used in the following commands to replace env variables within the secret.yaml.tmpl
+file. If you do not have envsubst, you can create the secret after having replaced the env var manually.
+
+```
+export EXOSCALE_API_KEY=...
+export EXOSCALE_API_SECRET=...
+cat examples/providerconfig/secret.yaml.tmpl| envsubst | kubectl apply -f -
 ```
 
-Push image:
+2. Provider installation
 
-```console
-make push
+Install the Exoscale provider by using the following command
+
+```
+kubectl crossplane install provider lucj/provider-jet-exoscale-amd64:v0.0.0-23.g16f4e86
 ```
 
-Build binary:
+Note: arm64 will be available soon
 
-```console
-make build
+3. Create Exoscale resources:
+
+- Compute instance
+
 ```
+cat <<EOF | kubectl apply -f -
+apiVersion: compute.exoscale.jet.crossplane.io/v1alpha1
+kind: Instance
+metadata:
+  name: demo
+spec:
+  forProvider:
+    displayName: "demo"
+    zone: "de-fra-1"
+    diskSize: 30
+    template: "Linux Ubuntu 20.04 LTS 64-bit"
+    securityGroups: ["default"]
+  providerConfigRef:
+    name: default
+EOF
+```
+
+From your Exoscale portal you will see a new compute instance
+
+![portal](./images/exoscale_compute.png)
+
+- DBaas
+
+```
+cat <<EOF | kubectl apply -f -
+apiVersion: database.exoscale.jet.crossplane.io/v1alpha1
+kind: Database
+metadata:
+  name: db
+spec:
+  forProvider:
+    zone: "de-fra-1"
+    name: "test"
+    type: "pg"
+    plan: "startup-4"
+    terminationProtection: false
+  providerConfigRef:
+    name: default
+EOF
+```
+
+From your Exoscale portal you will see a new Postgres instance
+
+![portal](./images/exoscale_database.png)
+
+- SKS cluster
+
+```
+cat <<EOF | kubectl apply -f -
+apiVersion: sks.exoscale.jet.crossplane.io/v1alpha1
+kind: Cluster
+metadata:
+  name: demo
+spec:
+  forProvider:
+    description: "Managed with Crossplane Exoscale Provider (generated with Terrajet)"
+    zone: "de-fra-1"
+    name: "demo"
+  providerConfigRef:
+    name: default
+EOF
+```
+
+From your Exoscale portal you will see a new SKS cluster
+
+![portal](./images/exoscale_sks_cluster.png)
+
 
 ## Report a Bug
 
 For filing bugs, suggesting improvements, or requesting new features, please
-open an [issue](https://github.com/crossplane-contrib/provider-jet-exoscale/issues).
-
-## Contact
-
-Please use the following to reach members of the community:
-
-* Slack: Join our [slack channel](https://slack.crossplane.io)
-* Forums:
-  [crossplane-dev](https://groups.google.com/forum/#!forum/crossplane-dev)
-* Twitter: [@crossplane_io](https://twitter.com/crossplane_io)
-* Email: [info@crossplane.io](mailto:info@crossplane.io)
+open an [issue](https://github.com/lucj/provider-jet-exoscale/issues).
 
 ## Governance and Owners
 
