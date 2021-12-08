@@ -81,7 +81,7 @@ EOF
 
 From your Exoscale portal you will see a new compute instance
 
-![portal](./images/exoscale_compute.png)
+![portal](./picts/exoscale_compute_instance.png)
 
 - DBaas
 
@@ -105,7 +105,7 @@ EOF
 
 From your Exoscale portal you will see a new Postgres instance
 
-![portal](./images/exoscale_database.png)
+![portal](./picts/exoscale_database.png)
 
 - SKS cluster
 
@@ -127,7 +127,7 @@ EOF
 
 From your Exoscale portal you will see a new SKS cluster
 
-![portal](./images/exoscale_sks_cluster.png)
+![portal](./picts/exoscale_sks_cluster.png)
 
 
 ## Report a Bug
