@@ -1,0 +1,15 @@
+apiVersion: securitygrouprule.exoscale.jet.crossplane.io/v1alpha1
+kind: SecurityGroupRule
+metadata:
+  name: prometheus-1
+spec:
+  forProvider:
+    description: "Prometheus"
+    securityGroup: "sks"
+    type: "INGRESS"
+    protocol: "TCP"
+    startPort: 9100
+    endPort: 9100
+    userSecurityGroup: "sks"
+  providerConfigRef:
+    name: exoscale

@@ -23,6 +23,9 @@ import (
 	"github.com/lucj/provider-jet-exoscale/config/compute"
 	"github.com/lucj/provider-jet-exoscale/config/database"
 	"github.com/lucj/provider-jet-exoscale/config/sks"
+	"github.com/lucj/provider-jet-exoscale/config/nodepool"
+	"github.com/lucj/provider-jet-exoscale/config/security_group"
+	"github.com/lucj/provider-jet-exoscale/config/security_group_rule"
 )
 
 const (
@@ -47,15 +50,21 @@ func GetProvider(tf *schema.Provider) *tjconfig.Provider {
 		tjconfig.WithDefaultResourceFn(defaultResourceFn),
 		tjconfig.WithIncludeList([]string{
 			"exoscale_sks_cluster$",
+                        "exoscale_sks_nodepool$",
 			"exoscale_database$",
 			"exoscale_compute$",
+			"exoscale_security_group$",
+			"exoscale_security_group_rule$",
 		}))
 
 	for _, configure := range []func(provider *tjconfig.Provider){
 		// add custom config functions
 		sks.Customize,
+                nodepool.Customize,
 		database.Customize,
 		compute.Customize,
+                security_group.Customize,
+                security_group_rule.Customize,
 	} {
 		configure(pc)
 	}

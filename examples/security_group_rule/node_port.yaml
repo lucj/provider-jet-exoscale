@@ -1,0 +1,15 @@
+apiVersion: securitygrouprule.exoscale.jet.crossplane.io/v1alpha1
+kind: SecurityGroupRule
+metadata:
+  name: nodeport
+spec:
+  forProvider:
+    description: "Node ports"
+    securityGroup: "sks"
+    type: "INGRESS"
+    protocol: "TCP"
+    startPort: 30000
+    endPort: 32767
+    cidr: "0.0.0.0/0"
+  providerConfigRef:
+    name: exoscale

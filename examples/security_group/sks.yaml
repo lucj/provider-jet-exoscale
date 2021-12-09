@@ -1,0 +1,10 @@
+apiVersion: securitygroup.exoscale.jet.crossplane.io/v1alpha1
+kind: SecurityGroup
+metadata:
+  name: sks
+spec:
+  forProvider:
+    name: "sks"
+    description: "this is a SG for SKS cluster"
+  providerConfigRef:
+    name: exoscale

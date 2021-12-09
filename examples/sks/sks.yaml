@@ -8,4 +8,4 @@ spec:
     zone: "de-fra-1"
     name: "demo"
   providerConfigRef:
-    name: default
+    name: exoscale

@@ -1,0 +1,15 @@
+apiVersion: securitygrouprule.exoscale.jet.crossplane.io/v1alpha1
+kind: SecurityGroupRule
+metadata:
+  name: kubelet
+spec:
+  forProvider:
+    description: "Kubelet"
+    securityGroup: "sks"
+    type: "INGRESS"
+    protocol: "TCP"
+    startPort: 10250
+    endPort: 10250
+    userSecurityGroup: "sks" 
+  providerConfigRef:
+    name: exoscale

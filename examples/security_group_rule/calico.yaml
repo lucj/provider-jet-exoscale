@@ -1,0 +1,15 @@
+apiVersion: securitygrouprule.exoscale.jet.crossplane.io/v1alpha1
+kind: SecurityGroupRule
+metadata:
+  name: calico
+spec:
+  forProvider:
+    description: "Calico"
+    securityGroup: "sks"
+    type: "INGRESS"
+    protocol: "UDP"
+    startPort: 4789
+    endPort: 4789
+    userSecurityGroup: "sks"
+  providerConfigRef:
+    name: exoscale

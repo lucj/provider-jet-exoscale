@@ -9,6 +9,5 @@ spec:
     diskSize: 30
     template: "Linux Ubuntu 20.04 LTS 64-bit"
     securityGroups: ["default"]
-    keyPair: "training"
   providerConfigRef:
-    name: default
+    name: exoscale

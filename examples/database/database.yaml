@@ -10,4 +10,4 @@ spec:
     plan: "startup-4"
     terminationProtection: false
   providerConfigRef:
-    name: default
+    name: exoscale

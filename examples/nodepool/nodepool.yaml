@@ -1,0 +1,13 @@
+apiVersion: nodepool.exoscale.jet.crossplane.io/v1alpha1
+kind: Nodepool
+metadata:
+  name: demo
+spec:
+  forProvider:
+    zone: "de-fra-1"
+    name: "demo"
+    instanceType: "standard.medium"
+    size: 3
+    clusterId: UUID_OF_THE_SKS_CLUSTER
+  providerConfigRef:
+    name: exoscale
