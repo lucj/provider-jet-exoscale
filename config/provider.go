@@ -63,8 +63,8 @@ func GetProvider(tf *schema.Provider) *tjconfig.Provider {
 		nodepool.Customize,
 		database.Customize,
 		compute.Customize,
-		security_group.Customize,
-		security_group_rule.Customize,
+		securitygroup.Customize,
+		securitygrouprule.Customize,
 	} {
 		configure(pc)
 	}
