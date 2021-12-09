@@ -1,4 +1,4 @@
-package security_group
+package securitygroup
 
 import "github.com/crossplane-contrib/terrajet/pkg/config"
 
@@ -6,7 +6,7 @@ import "github.com/crossplane-contrib/terrajet/pkg/config"
 func Customize(p *config.Provider) {
 	p.AddResourceConfigurator("exoscale_security_group", func(r *config.Resource) {
 		// we need to override the default group that terrajet generated for
-                r.Kind = "SecurityGroup"
+		r.Kind = "SecurityGroup"
 		r.ShortGroup = "securitygroup"
 		r.ExternalName = config.IdentifierFromProvider
 	})
