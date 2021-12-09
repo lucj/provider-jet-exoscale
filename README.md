@@ -10,7 +10,10 @@ Warning: this is a WIP, currently for testing purposes and not yet in an alpha v
 
 Only a limited number of resources are taken into account and not fully tested:
 - instances
-- sks cluster (without nodepool nor security groups)
+- sks cluster (without related nodepool nor security groups)
+- nodepool
+- security group
+- security group rule
 - DBaas
 
 ## Getting Started
