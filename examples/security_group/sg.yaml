@@ -1,7 +1,7 @@
 apiVersion: securitygroup.exoscale.jet.crossplane.io/v1alpha1
 kind: SecurityGroup
 metadata:
-  name: sks
+  name: sks-sg
 spec:
   forProvider:
     name: "sks"
