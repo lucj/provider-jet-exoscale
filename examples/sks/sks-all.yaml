@@ -106,13 +106,13 @@ kind: Nodepool
 metadata:
   name: demo
 spec:
-  clusterIdRef:
-    name: demo
   forProvider:
     zone: "de-fra-1"
     name: "demo"
     instanceType: "standard.medium"
     size: 3
+    clusterIdRef:
+      name: demo
     #  securityGroupIds: ... 
   providerConfigRef:
     name: exoscale

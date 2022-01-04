@@ -9,3 +9,18 @@ spec:
     name: "demo"
   providerConfigRef:
     name: exoscale
+---
+apiVersion: nodepool.exoscale.jet.crossplane.io/v1alpha1
+kind: Nodepool
+metadata:
+  name: demo
+spec:
+  forProvider:
+    clusterIdRef:
+      name: demo
+    zone: "de-fra-1"
+    name: "demo"
+    instanceType: "standard.medium"
+    size: 2
+  providerConfigRef:
+    name: exoscale

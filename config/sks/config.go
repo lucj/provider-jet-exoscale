@@ -23,5 +23,8 @@ func Customize(p *config.Provider) {
                         RefFieldName:      "SecurityGroupIdRefs",
                         SelectorFieldName: "SecurityGroupIdSelector",
                 }*/
+                r.LateInitializer = config.LateInitializer{
+                        IgnoredFields: []string{"cluster_id"},
+                }
         })
 }
