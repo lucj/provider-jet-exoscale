@@ -22,7 +22,6 @@ import (
 
 	"github.com/lucj/provider-jet-exoscale/config/compute"
 	"github.com/lucj/provider-jet-exoscale/config/database"
-	"github.com/lucj/provider-jet-exoscale/config/nodepool"
 	"github.com/lucj/provider-jet-exoscale/config/securitygroup"
 	"github.com/lucj/provider-jet-exoscale/config/securitygrouprule"
 	"github.com/lucj/provider-jet-exoscale/config/sks"
@@ -60,7 +59,6 @@ func GetProvider(tf *schema.Provider) *tjconfig.Provider {
 	for _, configure := range []func(provider *tjconfig.Provider){
 		// add custom config functions
 		sks.Customize,
-		nodepool.Customize,
 		database.Customize,
 		compute.Customize,
 		securitygroup.Customize,
