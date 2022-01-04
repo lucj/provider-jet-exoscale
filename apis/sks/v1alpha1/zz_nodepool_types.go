@@ -83,7 +83,7 @@ type NodepoolParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroupIdSelector *v1.Selector `json:"securityGroupIdSelector,omitempty" tf:"-"`
 
-	// +crossplane:generate:reference:type=github.com/lucj/provider-jet-exoscale/apis/securitygroup/v1alpha1
+	// +crossplane:generate:reference:type=github.com/lucj/provider-jet-exoscale/apis/securitygroup/v1alpha1.SecurityGroup
 	// +crossplane:generate:reference:refFieldName=SecurityGroupIdRefs
 	// +crossplane:generate:reference:selectorFieldName=SecurityGroupIdSelector
 	// +kubebuilder:validation:Optional

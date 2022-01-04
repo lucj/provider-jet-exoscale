@@ -101,7 +101,7 @@ spec:
   providerConfigRef:
     name: exoscale
 ---
-apiVersion: nodepool.exoscale.jet.crossplane.io/v1alpha1
+apiVersion: sks.exoscale.jet.crossplane.io/v1alpha1
 kind: Nodepool
 metadata:
   name: demo
@@ -113,7 +113,7 @@ spec:
     size: 3
     clusterIdRef:
       name: demo
-    SecurityGroupIdRefs:
+    securityGroupIdRefs:
     - name: sks
   providerConfigRef:
     name: exoscale

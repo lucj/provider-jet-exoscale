@@ -19,8 +19,8 @@ package v1alpha1
 
 import (
 	"context"
-	github "github"
 	reference "github.com/crossplane/crossplane-runtime/pkg/reference"
+	v1alpha1 "github.com/lucj/provider-jet-exoscale/apis/securitygroup/v1alpha1"
 	errors "github.com/pkg/errors"
 	client "sigs.k8s.io/controller-runtime/pkg/client"
 )
@@ -55,8 +55,8 @@ func (mg *Nodepool) ResolveReferences(ctx context.Context, c client.Reader) erro
 		References:    mg.Spec.ForProvider.SecurityGroupIdRefs,
 		Selector:      mg.Spec.ForProvider.SecurityGroupIdSelector,
 		To: reference.To{
-			List:    &github.com/lucj/provider - jet - exoscale/apis/securitygroup/v1alpha1List{},
-			Managed: &github.com/lucj/provider - jet - exoscale/apis/securitygroup/v1alpha1{},
+			List:    &v1alpha1.SecurityGroupList{},
+			Managed: &v1alpha1.SecurityGroup{},
 		},
 	})
 	if err != nil {
