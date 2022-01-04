@@ -113,6 +113,7 @@ spec:
     size: 3
     clusterIdRef:
       name: demo
-    #  securityGroupIds: ... 
+    SecurityGroupIdRefs:
+    - name: sks
   providerConfigRef:
     name: exoscale

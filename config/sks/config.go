@@ -18,13 +18,13 @@ func Customize(p *config.Provider) {
                         Type:              "Cluster",
                         RefFieldName:      "ClusterIdRef",
                 }
-                /*r.References["security_group_ids"] = config.Reference{
+                r.References["security_group_ids"] = config.Reference{
                         Type:              "SecurityGroup",
                         RefFieldName:      "SecurityGroupIdRefs",
                         SelectorFieldName: "SecurityGroupIdSelector",
-                }*/
+                }
                 r.LateInitializer = config.LateInitializer{
-                        IgnoredFields: []string{"cluster_id"},
+                        IgnoredFields: []string{"cluster_id", "security_group_ids"},
                 }
         })
 }
