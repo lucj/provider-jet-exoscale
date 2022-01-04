@@ -6,9 +6,9 @@ PROJECT_REPO := github.com/lucj/$(PROJECT_NAME)
 
 export TERRAFORM_VERSION := 1.0.11
 export TERRAFORM_PROVIDER_SOURCE := exoscale/exoscale
-export TERRAFORM_PROVIDER_VERSION := 0.31.1
+export TERRAFORM_PROVIDER_VERSION := 0.31.2
 export TERRAFORM_PROVIDER_DOWNLOAD_NAME := terraform-provider-exoscale
-export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX := https://releases.hashicorp.com/terraform-provider-exoscale/0.31.1
+export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX := https://releases.hashicorp.com/terraform-provider-exoscale/0.31.2
 
 PLATFORMS ?= linux_amd64 linux_arm64
 
