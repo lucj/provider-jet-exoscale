@@ -1,0 +1,25 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: cluster-alone
+  labels:
+    crossplane.io/xrd: xclusters.sks.exoscale.com
+    provider: exoscale
+spec:
+  writeConnectionSecretsToNamespace: crossplane-system
+  compositeTypeRef:
+    apiVersion: sks.exoscale.com/v1alpha1
+    kind: XCluster
+  resources:
+  - name: cluster
+    base:
+      apiVersion: sks.exoscale.jet.crossplane.io/v1alpha1
+      kind: Cluster
+      spec:
+        forProvider:
+          description: "Managed with Crossplane Exoscale Provider"
+          zone: "de-fra-1"
+    patches:
+    - type: FromCompositeFieldPath
+      fromFieldPath: spec.parameters.name
+      toFieldPath: spec.forProvider.name

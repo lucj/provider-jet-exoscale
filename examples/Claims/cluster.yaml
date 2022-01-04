@@ -1,0 +1,10 @@
+apiVersion: sks.exoscale.com/v1alpha1
+kind: Cluster
+metadata:
+  namespace: default
+  name: my-sks-cluster
+spec:
+  parameters:
+    name: "DEV-CLUSTER"
+  compositionRef:
+    name: cluster-alone

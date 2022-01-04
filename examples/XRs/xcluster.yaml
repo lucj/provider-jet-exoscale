@@ -1,0 +1,7 @@
+apiVersion: sks.exoscale.com/v1alpha1
+kind: XCluster
+metadata:
+  name: demo
+spec:
+  parameters:
+    name: "TEST"
