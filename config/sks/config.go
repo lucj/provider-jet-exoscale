@@ -19,7 +19,8 @@ func Customize(p *config.Provider) {
                         RefFieldName:      "ClusterIdRef",
                 }
                 r.References["security_group_ids"] = config.Reference{
-                        Type:              "SecurityGroup",
+                        //Type:              "SecurityGroup",
+                        Type:              "github.com/lucj/provider-jet-exoscale/apis/securitygroup/v1alpha1.SecurityGroup",
                         RefFieldName:      "SecurityGroupIdRefs",
                         SelectorFieldName: "SecurityGroupIdSelector",
                 }
