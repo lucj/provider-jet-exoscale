@@ -10,11 +10,19 @@ Warning: this is a WIP, currently for testing purposes and not yet in an alpha v
 
 Only a limited number of resources are taken into account and not fully tested:
 - instances
-- sks cluster (without related nodepool nor security groups)
+- sks cluster (with related nodepool and security group)
 - nodepool
 - security group
 - security group rule
 - DBaas
+
+Note: additional tests are currently on-going to play with Crossplane specific resources:
+- CompositeResourceDefinition (XRD)
+- CompositeResource (XR)
+- Composition
+- Claims
+
+More on that soon...
 
 ## Getting Started
 
@@ -104,21 +112,7 @@ EOF
 - Compute instance
 
 ```
-cat <<EOF | kubectl apply -f -
-apiVersion: compute.exoscale.jet.crossplane.io/v1alpha1
-kind: Instance
-metadata:
-  name: demo
-spec:
-  forProvider:
-    displayName: "demo"
-    zone: "de-fra-1"
-    diskSize: 30
-    template: "Linux Ubuntu 20.04 LTS 64-bit"
-    securityGroups: ["default"]
-  providerConfigRef:
-    name: exoscale
-EOF
+$ kubectl apply -f examples/compute/instance.yaml
 ```
 
 From your Exoscale portal you will see a new compute instance
@@ -128,21 +122,7 @@ From your Exoscale portal you will see a new compute instance
 - DBaas
 
 ```
-cat <<EOF | kubectl apply -f -
-apiVersion: database.exoscale.jet.crossplane.io/v1alpha1
-kind: Database
-metadata:
-  name: db
-spec:
-  forProvider:
-    zone: "de-fra-1"
-    name: "test"
-    type: "pg"
-    plan: "startup-4"
-    terminationProtection: false
-  providerConfigRef:
-    name: exoscale
-EOF
+$ kubectl apply -f examples/database/database.yaml
 ```
 
 From your Exoscale portal you will see a new Postgres instance
@@ -152,25 +132,13 @@ From your Exoscale portal you will see a new Postgres instance
 - SKS cluster
 
 ```
-cat <<EOF | kubectl apply -f -
-apiVersion: sks.exoscale.jet.crossplane.io/v1alpha1
-kind: Cluster
-metadata:
-  name: demo
-spec:
-  forProvider:
-    description: "Managed with Crossplane Exoscale Provider (generated with Terrajet)"
-    zone: "de-fra-1"
-    name: "demo"
-  providerConfigRef:
-    name: exoscale
-EOF
+$ kubectl apply -f examples/sks/sks.yaml
 ```
 
-From your Exoscale portal you will see a new SKS cluster
+From your Exoscale portal you will see a new SKS cluster and a nodepool attached to that one.
+Each node of that nodepool belongs to a new security group created alongside the cluster.
 
 ![portal](./picts/exoscale_sks_cluster.png)
-
 
 The 3 resources above appear as managed resources, in a couple of seconds they are in synced (meaning
 that the specification is in sync with the acutal resource existing in the cluster):

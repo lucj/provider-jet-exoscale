@@ -3,6 +3,9 @@ kind: CompositeResourceDefinition
 metadata:
   name: xclusters.sks.exoscale.com
 spec:
+  claimNames:
+    kind: Cluster
+    plural: clusters
   group: sks.exoscale.com
   names:
     kind: XCluster
