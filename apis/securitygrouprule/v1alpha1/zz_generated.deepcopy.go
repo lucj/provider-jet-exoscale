@@ -22,6 +22,7 @@ limitations under the License.
 package v1alpha1
 
 import (
+	"github.com/crossplane/crossplane-runtime/apis/common/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 )
 
@@ -142,6 +143,16 @@ func (in *SecurityGroupRuleParameters) DeepCopyInto(out *SecurityGroupRuleParame
 		*out = new(string)
 		**out = **in
 	}
+	if in.SecurityGroupIdRef != nil {
+		in, out := &in.SecurityGroupIdRef, &out.SecurityGroupIdRef
+		*out = new(v1.Reference)
+		**out = **in
+	}
+	if in.SecurityGroupIdSelector != nil {
+		in, out := &in.SecurityGroupIdSelector, &out.SecurityGroupIdSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
+	}
 	if in.StartPort != nil {
 		in, out := &in.StartPort, &out.StartPort
 		*out = new(int64)
@@ -161,6 +172,16 @@ func (in *SecurityGroupRuleParameters) DeepCopyInto(out *SecurityGroupRuleParame
 		in, out := &in.UserSecurityGroupID, &out.UserSecurityGroupID
 		*out = new(string)
 		**out = **in
+	}
+	if in.UserSecurityGroupIdRef != nil {
+		in, out := &in.UserSecurityGroupIdRef, &out.UserSecurityGroupIdRef
+		*out = new(v1.Reference)
+		**out = **in
+	}
+	if in.UserSecurityGroupIdSelector != nil {
+		in, out := &in.UserSecurityGroupIdSelector, &out.UserSecurityGroupIdSelector
+		*out = new(v1.Selector)
+		(*in).DeepCopyInto(*out)
 	}
 }
 

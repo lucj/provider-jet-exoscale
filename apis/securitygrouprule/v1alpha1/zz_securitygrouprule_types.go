@@ -51,8 +51,17 @@ type SecurityGroupRuleParameters struct {
 	// +kubebuilder:validation:Optional
 	SecurityGroup *string `json:"securityGroup,omitempty" tf:"security_group,omitempty"`
 
+	// +crossplane:generate:reference:type=github.com/lucj/provider-jet-exoscale/apis/securitygroup/v1alpha1.SecurityGroup
+	// +crossplane:generate:reference:refFieldName=SecurityGroupIdRef
+	// +crossplane:generate:reference:selectorFieldName=SecurityGroupIdSelector
 	// +kubebuilder:validation:Optional
 	SecurityGroupID *string `json:"securityGroupId,omitempty" tf:"security_group_id,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	SecurityGroupIdRef *v1.Reference `json:"securityGroupIdRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	SecurityGroupIdSelector *v1.Selector `json:"securityGroupIdSelector,omitempty" tf:"-"`
 
 	// +kubebuilder:validation:Optional
 	StartPort *int64 `json:"startPort,omitempty" tf:"start_port,omitempty"`
@@ -63,8 +72,17 @@ type SecurityGroupRuleParameters struct {
 	// +kubebuilder:validation:Optional
 	UserSecurityGroup *string `json:"userSecurityGroup,omitempty" tf:"user_security_group,omitempty"`
 
+	// +crossplane:generate:reference:type=github.com/lucj/provider-jet-exoscale/apis/securitygroup/v1alpha1.SecurityGroup
+	// +crossplane:generate:reference:refFieldName=UserSecurityGroupIdRef
+	// +crossplane:generate:reference:selectorFieldName=UserSecurityGroupIdSelector
 	// +kubebuilder:validation:Optional
 	UserSecurityGroupID *string `json:"userSecurityGroupId,omitempty" tf:"user_security_group_id,omitempty"`
+
+	// +kubebuilder:validation:Optional
+	UserSecurityGroupIdRef *v1.Reference `json:"userSecurityGroupIdRef,omitempty" tf:"-"`
+
+	// +kubebuilder:validation:Optional
+	UserSecurityGroupIdSelector *v1.Selector `json:"userSecurityGroupIdSelector,omitempty" tf:"-"`
 }
 
 // SecurityGroupRuleSpec defines the desired state of SecurityGroupRule

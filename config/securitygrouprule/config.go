@@ -9,8 +9,18 @@ func Customize(p *config.Provider) {
 		r.Kind = "SecurityGroupRule"
 		r.ShortGroup = "securitygrouprule"
 		r.ExternalName = config.IdentifierFromProvider
+		r.References["security_group_id"] = config.Reference{
+			Type:              "github.com/lucj/provider-jet-exoscale/apis/securitygroup/v1alpha1.SecurityGroup",
+			RefFieldName:      "SecurityGroupIdRef",
+			SelectorFieldName: "SecurityGroupIdSelector",
+		}
+		r.References["user_security_group_id"] = config.Reference{
+			Type:              "github.com/lucj/provider-jet-exoscale/apis/securitygroup/v1alpha1.SecurityGroup",
+			RefFieldName:      "UserSecurityGroupIdRef",
+			SelectorFieldName: "UserSecurityGroupIdSelector",
+		}
 		r.LateInitializer = config.LateInitializer{
-			IgnoredFields: []string{"security_group_id"},
+			IgnoredFields: []string{"security_group", "security_group_id", "user_security_group", "user_security_group_id"},
 		}
 	})
 }
