@@ -16,12 +16,14 @@ metadata:
 spec:
   forProvider:
     description: "Calico"
-    securityGroup: "sks"
+    securityGroupIdRef:
+      name: sks
     type: "INGRESS"
     protocol: "UDP"
     startPort: 4789
     endPort: 4789
-    userSecurityGroup: "sks"
+    userSecurityGroupIdRef:
+      name: sks
   providerConfigRef:
     name: exoscale
 ---
@@ -32,12 +34,14 @@ metadata:
 spec:
   forProvider:
     description: "Kubelet"
-    securityGroup: "sks"
+    securityGroupIdRef:
+      name: sks
     type: "INGRESS"
     protocol: "TCP"
     startPort: 10250
     endPort: 10250
-    userSecurityGroup: "sks"
+    userSecurityGroupIdRef:
+      name: sks
   providerConfigRef:
     name: exoscale
 ---
@@ -48,7 +52,8 @@ metadata:
 spec:
   forProvider:
     description: "Node ports"
-    securityGroup: "sks"
+    securityGroupIdRef:
+      name: sks
     type: "INGRESS"
     protocol: "TCP"
     startPort: 30000
@@ -64,12 +69,14 @@ metadata:
 spec:
   forProvider:
     description: "Prometheus"
-    securityGroup: "sks"
+    securityGroupIdRef:
+      name: sks
     type: "INGRESS"
     protocol: "TCP"
     startPort: 9100
     endPort: 9100
-    userSecurityGroup: "sks"
+    userSecurityGroupIdRef:
+      name: sks
   providerConfigRef:
     name: exoscale
 ---
@@ -80,12 +87,14 @@ metadata:
 spec:
   forProvider:
     description: "Prometheus"
-    securityGroup: "sks"
+    securityGroupIdRef:
+      name: sks
     type: "INGRESS"
     protocol: "TCP"
     startPort: 10251
     endPort: 10255
-    userSecurityGroup: "sks"
+    userSecurityGroupIdRef:
+      name: sks
   providerConfigRef:
     name: exoscale
 ---

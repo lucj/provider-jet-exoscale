@@ -40,9 +40,6 @@ spec:
     - type: FromCompositeFieldPath
       fromFieldPath: spec.parameters.name
       toFieldPath: spec.forProvider.name
-    - type: FromCompositeFieldPath
-      fromFieldPath: spec.parameters.name
-      toFieldPath: spec.userSecurityGroup
   - name: sg_rule_calico
     base:
       apiVersion: securitygrouprule.exoscale.jet.crossplane.io/v1alpha1
@@ -50,21 +47,16 @@ spec:
       spec:
         forProvider:
           description: "Calico"
-          securityGroup: "NAME_OF_RELATED_SECURITY_GROUP"
+          securityGroupIdSelector:
+            matchControllerRef: true
           type: "INGRESS"
           protocol: "UDP"
           startPort: 4789
           endPort: 4789
-          userSecurityGroup: "NAME_OF_ALLOWED_SECURITY_GROUP"
+          userSecurityGroupIdSelector:
+            matchControllerRef: true
         providerConfigRef:
           name: exoscale
-    patches:
-    - type: FromCompositeFieldPath
-      fromFieldPath: spec.parameters.name
-      toFieldPath: spec.forProvider.name
-    - type: FromCompositeFieldPath
-      fromFieldPath: spec.parameters.name
-      toFieldPath: spec.userSecurityGroup
   - name: sg_rule_kubelet
     base:
       apiVersion: securitygrouprule.exoscale.jet.crossplane.io/v1alpha1
@@ -72,21 +64,16 @@ spec:
       spec:
         forProvider:
           description: "Kubelet"
-          securityGroup: "NAME_OF_RELATED_SECURITY_GROUP"
+          securityGroupIdSelector:
+            matchControllerRef: true
           type: "INGRESS"
           protocol: "TCP"
           startPort: 10250
           endPort: 10250
-          userSecurityGroup: "NAME_OF_ALLOWED_SECURITY_GROUP"
+          userSecurityGroupIdSelector:
+            matchControllerRef: true
         providerConfigRef:
           name: exoscale 
-    patches:
-    - type: FromCompositeFieldPath
-      fromFieldPath: spec.parameters.name
-      toFieldPath: spec.forProvider.name
-    - type: FromCompositeFieldPath
-      fromFieldPath: spec.parameters.name
-      toFieldPath: spec.userSecurityGroup
   - name: nodepool
     base:
       apiVersion: sks.exoscale.jet.crossplane.io/v1alpha1
