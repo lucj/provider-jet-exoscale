@@ -107,7 +107,7 @@ spec:
 EOF
 ```
 
-5. Create Exoscale resources:
+5. Create Exoscale resources directly:
 
 - Compute instance
 
@@ -164,6 +164,88 @@ Removing the resources from the cluster only requires the usual `kubectl delete`
 kubectl delete instance demo
 kubectl delete database db
 kubectl delete cluster demo
+```
+
+6. Using CompositeResourceDefinition / CompositeResource / Composition / Claim
+
+As we've seen in the previous part, it's very easy to create managed resources directly. But very often we'll want to deploy an infrastructure that is composed of several managed resources in a more dynamic way. Also, we sometimes need to hide all the internal complexity to users so they can use a simple (dedicated) resource to create a whole set of dependent managed resources. That is where Crossplane also shines as it allows to define CompositeResourceDefinitions (specialized CustomResourceDefinition), Compositions and Claims for those purposes.
+
+First we use the following command to create a CompositeResourceDefinition (XRD):
+
+```
+kubectl apply -f examples/XRDs/xcluster.yaml
+```
+
+It basically defines a new type of resource in Kubernetes:
+- of type xclusters.sks.exoscale.com
+- with a single property: *name* defined as a string
+
+Next we create a Composition:
+
+```
+kubectl apply -f examples/Compositions/cluster.yaml
+```
+
+That one defines the list of dependent managed resources needed to create an Exoscale SKS cluster:
+- the cluster's control plane
+- a sample nodepool with 2 VMs
+- the securitygroup (and associated security group rules) the nodepool belongs to
+
+XRDs and Compositions are often created by administrators / SREs as they can be very complicated resources that the end users do not need to know anything about.
+
+In order to allow users to create a cluster we will provided them a new kind of resource (also references as Claims) with the minimum information they need:
+
+As a user I could only create the following resource:
+```
+$ cat <<EOF | kubectl apply -f -
+apiVersion: sks.exoscale.com/v1alpha1
+kind: Cluster
+metadata:
+  name: my-dev-cluster
+spec:
+  parameters:
+    name: "dev-cluster"
+  compositionRef:
+    name: cluster
+EOF
+```
+
+This will trigger the creation of an Exoscale SKS cluster (Cluster resource within the sks.exoscale.com group) through Crossplane managed resources.
+
+We can list the Clusters and the managed resources with the following commands:
+
+```
+$ kubectl get cluster
+NAME             READY   CONNECTION-SECRET   AGE
+my-dev-cluster   True                        4m36s
+```
+
+```
+$ kubectl get managed
+NAME                                                                                READY   SYNCED   EXTERNAL-NAME                          AGE
+securitygroup.securitygroup.exoscale.jet.crossplane.io/my-dev-cluster-nvnd8-dmvst   True    True     0e7cd0b1-16ac-4bd9-853f-d56a3379b3f6   2m4s
+
+NAME                                                                                        READY   SYNCED   EXTERNAL-NAME                          AGE
+securitygrouprule.securitygrouprule.exoscale.jet.crossplane.io/my-dev-cluster-nvnd8-kgbfx   True    True     72453f6c-8da3-4963-a431-464534117ef2   2m4s
+securitygrouprule.securitygrouprule.exoscale.jet.crossplane.io/my-dev-cluster-nvnd8-kkz8j   True    True     3bb08d0e-07a5-4aa8-aad3-c1ee741b6065   2m3s
+securitygrouprule.securitygrouprule.exoscale.jet.crossplane.io/my-dev-cluster-nvnd8-rtbg7   True    True     f249c7ae-0291-4c95-a486-09a70b29f2e9   2m4s
+securitygrouprule.securitygrouprule.exoscale.jet.crossplane.io/my-dev-cluster-nvnd8-tnbjl   True    True     dd8d40de-8ef4-4113-b036-1e478fc5c71c   2m3s
+securitygrouprule.securitygrouprule.exoscale.jet.crossplane.io/my-dev-cluster-nvnd8-xb4f7   True    True     28f1e93a-d4db-40da-a581-43aa21237484   2m3s
+
+NAME                                                                 READY   SYNCED   EXTERNAL-NAME                          AGE
+nodepool.sks.exoscale.jet.crossplane.io/my-dev-cluster-nvnd8-fzvm4   True    True     44416c2a-a6d6-42c9-8ddf-ee3206a25413   2m3s
+
+NAME                                                                READY   SYNCED   EXTERNAL-NAME                          AGE
+cluster.sks.exoscale.jet.crossplane.io/my-dev-cluster-nvnd8-gvfs9   True    True     f66791f1-6680-4058-bc6a-fe03815e083a   2m4s
+```
+
+Note: a few tens of seconds are required to have all the resources in Sync.
+
+That cluster can easily be deleted:
+
+```
+$ kubectl delete cluster my-dev-cluster
+cluster.sks.exoscale.com "my-dev-cluster" deleted
 ```
 
 ## Report a Bug

@@ -74,6 +74,56 @@ spec:
             matchControllerRef: true
         providerConfigRef:
           name: exoscale 
+  - name: sg_rule_nodeport
+    base:
+      apiVersion: securitygrouprule.exoscale.jet.crossplane.io/v1alpha1
+      kind: SecurityGroupRule
+      spec:
+        forProvider:
+          description: "Node ports"
+          securityGroupIdSelector:
+            matchControllerRef: true
+          type: "INGRESS"
+          protocol: "TCP"
+          startPort: 30000
+          endPort: 32767
+          cidr: "0.0.0.0/0"
+        providerConfigRef:
+          name: exoscale
+  - name: sg_rule_prometheus_1
+    base:
+      apiVersion: securitygrouprule.exoscale.jet.crossplane.io/v1alpha1
+      kind: SecurityGroupRule
+      spec:
+        forProvider:
+          description: "Prometheus"
+          securityGroupIdSelector:
+            matchControllerRef: true
+          type: "INGRESS"
+          protocol: "TCP"
+          startPort: 9100
+          endPort: 9100
+          userSecurityGroupIdSelector:
+            matchControllerRef: true
+        providerConfigRef:
+          name: exoscale
+  - name: sg_rule_prometheus_2
+    base:
+      apiVersion: securitygrouprule.exoscale.jet.crossplane.io/v1alpha1
+      kind: SecurityGroupRule
+      spec:
+        forProvider:
+          description: "Prometheus"
+          securityGroupIdSelector:
+            matchControllerRef: true
+          type: "INGRESS"
+          protocol: "TCP"
+          startPort: 10251
+          endPort: 10251
+          userSecurityGroupIdSelector:
+            matchControllerRef: true
+        providerConfigRef:
+          name: exoscale
   - name: nodepool
     base:
       apiVersion: sks.exoscale.jet.crossplane.io/v1alpha1
